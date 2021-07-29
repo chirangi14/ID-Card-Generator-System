@@ -1,4 +1,3 @@
-<?php session_start(); ?>
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,6 +17,31 @@ body {
   padding: 10px 10px;
   text-decoration: none;
   font-size: 15px;
+}
+
+
+
+.table
+{
+	background-color: lightblue;
+	width: 90%;
+	margin-left: 10px;
+
+
+}
+.th
+{
+	background-color: grey;
+	font-size: 19px;
+
+
+}
+.td
+{
+	text-align: center;
+	font-size: 17px;
+
+
 }
 
 .topnav {
@@ -89,10 +113,17 @@ body {
   </a>
 </div>
 
-<div style="padding-left:20px ; font-size:40px; ">
-  <h2>Welcome <?php echo $_SESSION['name']; ?></h2>
+<div  style="padding-left:20px ; font-size:20px; clear: left;">
+  <h2>Student Data</h2>
  <!-- <p>Resize the browser window to see how it works.</p>-->
 </div>
+
+<!--<div style="padding-right:150px ; font-size:20px; float: right;">
+  <h2>Search Student ID</h2>
+  <input type="text" name="search" placeholder="Enter Student Name">
+  <!--<input type="button" name="btn_search" value="SEARCH BY NAME">
+ <!-- <p>Resize the browser window to see how it works.</p>
+</div>-->
 
 <script>
 function myFunction() {
@@ -107,3 +138,52 @@ function myFunction() {
 
 </body>
 </html>
+
+
+<?php
+				$db = mysqli_connect('localhost:3310','root','','id-card_generator');
+				if($db-> connect_error)
+				{
+					die("Connecction Failed:".$db-> connect_error);
+				}
+
+				$sql="select * from student_details";
+				$result= mysqli_query($db,$sql);
+
+				if ($result->num_rows > 0) {
+    // output data of each row
+    echo '<table border="2"  class="table" >';
+    echo '<tr class="th">';
+    echo'<th>First Name</th>
+    	<th>Middle Name</th>
+        <th>Last Name</th>
+        <th>Student ID</th>
+        <th>Specialization</th>
+        <th>Birth Date</th>
+        <th>Gender</th>
+        <th>Email ID</th>
+        <th>Mobile No</th>';
+    echo'</tr>';
+    while ($row = $result->fetch_assoc()) {
+        echo '<tr class="td">';
+        echo '  <td>' . $row["first_name"] . '</td>';
+        echo '  <td>' . $row["middle_name"] . '</td>';
+        echo '  <td>' . $row["last_name"] . '</td>';
+        echo '  <td>' . $row["stud_id"] . '</td>';
+        echo '  <td>' . $row["specialization"] . '</td>';
+        echo '  <td>' . $row["birthday"] . '</td>';
+        echo '  <td>' . $row["gender"] . '</td>';
+        echo '  <td>' . $row["email"] . '</td>';
+        echo '  <td>' . $row["phone"] . '</td>';
+      
+        echo '  </tr> ';
+    }
+    echo'</table>';
+} else {
+    echo "<br> No Record Found to display";
+}
+
+
+
+	
+?>

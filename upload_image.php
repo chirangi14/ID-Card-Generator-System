@@ -1,4 +1,3 @@
-<?php session_start(); ?>
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,6 +7,7 @@ body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
   background-color: lightgrey;
+  font-size: 30px;
 }
 
 .card
@@ -82,17 +82,12 @@ body {
   <a href="home.php" class="active">Home</a>
   <a href="fetch_stud_data.php">Student Details</a>
   <a href="generate_qr.php">Generate QR</a>
-  <a href="insert_image.php">Upload Images</a>
-  <a href="login.php">Log Out</a>
+ <a href="insert_image.php">Upload Images</a>
   <a href="javascript:void(0);" class="icon" onclick="myFunction()">
     <i class="fa fa-bars"></i>
   </a>
 </div>
 
-<div style="padding-left:20px ; font-size:40px; ">
-  <h2>Welcome <?php echo $_SESSION['name']; ?></h2>
- <!-- <p>Resize the browser window to see how it works.</p>-->
-</div>
 
 <script>
 function myFunction() {
@@ -107,3 +102,50 @@ function myFunction() {
 
 </body>
 </html>
+
+<br>
+<br>
+<?php
+// Include the database configuration file
+$db = mysqli_connect('localhost:3310','root','','id-card_generator');
+
+  if ($db->connect_error) {  
+    die("Connection failed: " . $db->connect_error); 
+  }
+
+$statusMsg = '';
+
+// File upload path
+$targetDir = "temp/";
+$stud_id=$_POST['stud_id'];
+$fileName = basename($_FILES["file"]["name"]);
+
+$targetFilePath = $targetDir . $fileName; //. $fileName_qr;
+$fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
+
+if(isset($_POST["submit"]) && !empty($_FILES["file"]["name"])){
+    // Allow certain file formats
+    $allowTypes = array('jpg','png','jpeg');
+    if(in_array($fileType, $allowTypes)){
+        // Upload file to server
+        if(move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)){
+            // Insert image file name into database
+            $insert = $db->query("INSERT into show_idcard (stud_id,qr_image) VALUES ('".$stud_id."','".$fileName."')");
+            if($insert){
+                $statusMsg = "The image has been uploaded successfully.";
+            }else{
+                $statusMsg = "File upload failed, please try again.";
+            } 
+        }else{
+            $statusMsg = "Sorry, there was an error uploading your file.";
+        }
+    }else{
+        $statusMsg = 'Sorry, only JPG, JPEG, & PNG files are allowed to upload.';
+    }
+}else{
+    $statusMsg = 'Please select a file to upload.';
+}
+
+// Display status message
+echo $statusMsg;
+?>
