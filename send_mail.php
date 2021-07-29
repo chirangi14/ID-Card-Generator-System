@@ -1,7 +1,3 @@
-<?php
-include('includes/header.php'); 
-include('includes/navbar.php'); 
-?>
 
 <!DOCTYPE html>
 <html>
@@ -103,10 +99,10 @@ input[type=submit]:hover {
 
 
 <form action="" method="POST">
-          <input type="text" name="sr_no" placeholder="Enter Sr No." required><br><br>
-          <input type="submit" name="search" value="SEARCH Sr No." required> <br><br>
+          <input type="text" name="sr_no" placeholder="Enter Student ID" ><br><br>
+          <input type="submit" name="search" value="SEARCH BY ID" > <br><br>
 
- </form>
+        </form>
 
         
 
@@ -143,7 +139,7 @@ input[type=submit]:hover {
                  
                   Your ID : <?php
                       // generating unique id  
-                      $myuid = uniqid("id1424@"); 
+                      $myuid = uniqid('id1424@'); 
   
                       echo $myuid; 
             ?>
@@ -209,8 +205,3 @@ input[type=submit]:hover {
 </center>
   </body>
 </html>
-
-<?php
-include('includes/scripts.php');
-include('includes/footer.php');
-?>
