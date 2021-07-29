@@ -1,7 +1,8 @@
-<?php session_start(); ?>
+<!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 body {
@@ -69,12 +70,14 @@ body {
     display: block;
     text-align: left;
   }
+  
+  
 }
 </style>
 </head>
 <body>
 
-<div class="card">
+  <div class="card">
   <h1>ID Card Generator</h1>
 </div>
 <br/>
@@ -89,10 +92,6 @@ body {
   </a>
 </div>
 
-<div style="padding-left:20px ; font-size:40px; ">
-  <h2>Welcome <?php echo $_SESSION['name']; ?></h2>
- <!-- <p>Resize the browser window to see how it works.</p>-->
-</div>
 
 <script>
 function myFunction() {
@@ -105,5 +104,38 @@ function myFunction() {
 }
 </script>
 
+
+  <br>
+  <br>
+    <form action="upload_image.php" method="post" enctype="multipart/form-data">
+    <table border="2" style="width: 70%;" align="center"  >
+      <tr>
+       <td height="50px" > <font size="5px" style="margin-left: 10px;"> Enter Student Id: </font> </td>
+        <td height="50px"> <input type="text" name="stud_id" style="font-size: 20px; margin-left: 10px;">  </td>
+      </tr>
+    
+     
+   
+      <tr>
+        <td height="50px">
+         <font size="5px" style="margin-left: 10px;"  > Select Student QR to Upload:
+          </font>
+        </td>
+        <td height="50px">
+          <input type="file" name="file" style="font-size: 20px; margin-left: 10px;"> 
+       
+        </td>
+      </tr>
+    
+      <tr>
+        <td colspan="2" align="center" height="50px" >
+          <input type="submit" name="submit" value="Upload" style="font-size: 25px;">
+        </td>
+      </tr>
+    
+    </table>
+</form>
+
 </body>
 </html>
+
